@@ -1,46 +1,49 @@
 ﻿using csharp_gestore_eventi;
 
-Event defaultEvent = new Event("Convegno", new DateOnly(2023, 05, 12), 500);
+ProgramEvent eventManager = CreateProgram();
+AddEvent(eventManager);
 
-// Event e = CreateEvent();
-Console.WriteLine(defaultEvent.ToString());
 
-// ReserveSeats(defaultEvent);
-// printInfo(defaultEvent);
+Console.WriteLine($"Numero di eventi: {eventManager.HowManyEvents()}");
 
-// ReserveAndCancel(defaultEvent);
+eventManager.PrintSummary();
 
-ProgramEvent EventManager = new ProgramEvent("Concerti");
+ProgramEvent.PrintEvents(SearchByDate(eventManager));
 
-EventManager.AddEvent(defaultEvent);
+eventManager.EmptyProgram();
 
-EventManager.PrintSummary();
+
 
 
 
 Event CreateEvent()
 {
-    Event e = null;
+    Event? e = null;
     try
     {
+        // Console.WriteLine();
         Console.Write("Inserisci il nome dell'evento: ");
         string title = Console.ReadLine() ?? "";
         Console.Write("Inserisci la data dell'evento(gg/mm/aaaa): ");
-        DateOnly date = FromString(Console.ReadLine());
+        DateOnly date = FromString(Console.ReadLine() ?? "01/01/2000");
         Console.Write("Inserisci la capienza dell'evento: ");
         int capacity = Convert.ToInt32(Console.ReadLine() ?? "0");
         e = new Event(title, date, capacity);
+        return e;
     }
     catch (ArgumentException error)
     {
-        Console.WriteLine(error.Message);
+        // Console.WriteLine(error.Message);
+        throw;
     }
-    
-    return e;
 }
 
 DateOnly FromString(string date)
 {
+    if (date == "")
+    {
+        throw new ArgumentException("Not valid date");
+    }
     string[] dateArray = date.Split('/');
     int day = Convert.ToInt32(dateArray[0]);
     int month = Convert.ToInt32(dateArray[1]);
@@ -109,3 +112,65 @@ void ReserveAndCancel(Event e)
     Console.WriteLine(e.ToString());
     printInfo(e);
 }
+
+ProgramEvent CreateProgram()
+{
+    ProgramEvent? program = null;
+    bool flag = true;
+    do
+    {
+        try
+        {
+            Console.Write("Inserisci il nome del programma: ");
+            string name = Console.ReadLine() ?? "";
+            program = new ProgramEvent(name);
+            flag = false;
+            Console.WriteLine();
+            return program;
+        }
+        catch (ArgumentException error)
+        {
+            Console.WriteLine(error.Message);
+            flag = true;
+        } 
+    } while (flag);
+    
+
+    return program;
+}
+
+void AddEvent(ProgramEvent program)
+{
+    Console.Write("Quanti eventi vuoi aggiungere? ");
+    int n = Convert.ToInt32(Console.ReadLine() ?? "0");
+
+    while (n != program.HowManyEvents())
+    {
+        bool flag = true;
+        
+        do
+        {
+            try
+            {
+                Event tmpEvent = CreateEvent();
+                program.AddEvent(tmpEvent);
+                Console.WriteLine();
+                flag = false;
+            }
+            catch (ArgumentException error)
+            {
+                Console.WriteLine(error.Message);
+                flag = true;
+
+            }
+        } while (flag);
+    }
+}
+
+List<Event> SearchByDate(ProgramEvent program)
+{
+    Console.Write("Inserisci la data in cui cercare gli eventi(gg/mm/aaaa): ");
+    DateOnly date = FromString(Console.ReadLine() ?? "01/01/2000");
+    return program.GetEventsFromDate(date);
+}
+

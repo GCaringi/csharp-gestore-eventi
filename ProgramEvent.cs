@@ -7,6 +7,10 @@ public class ProgramEvent
 
     public ProgramEvent(string title)
     {
+        if (title == "")
+        {
+            throw new ArgumentException("Title cannot be empty");
+        }
         Title = title;
         _events = new List<Event>();
     }
@@ -14,6 +18,11 @@ public class ProgramEvent
     public void AddEvent(Event e)
     {
         _events.Add(e);
+    }
+    
+    public List<Event> GetEvents()
+    {
+        return _events;
     }
 
     public List<Event> GetEventsFromDate(DateOnly date)
@@ -29,9 +38,10 @@ public class ProgramEvent
         }
         return selectedEvents;
     }
-    
+
     public static void PrintEvents(List<Event> events)
     {
+        Console.WriteLine("\nEvents:");
         foreach (Event e in events)
         {
             Console.WriteLine(e.ToString());
@@ -45,17 +55,18 @@ public class ProgramEvent
     
     public void EmptyProgram()
     {
+        Console.WriteLine("\nEmptying program...");
         _events.Clear();
     }
     
     public void PrintSummary()
     {
-        // string heading = String.Format("{0,-12} {0,12}\n", "Date", "Events");
-        Console.WriteLine("{0,-12}  {1,-18}", $"{Title}", "Evento");
+        Console.WriteLine("Ecco il tuo programma Eventi");
+        Console.WriteLine(Title);
         foreach (Event e in _events)
         {
-            // Console.WriteLine(e.ToString());
-            Console.WriteLine("{0,-11}-  {1,-18}", $"{e.Date}", $"{e.Title}");
+            Console.WriteLine("\t" + e.ToString());
+            
         }
     }
 
