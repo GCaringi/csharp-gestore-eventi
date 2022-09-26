@@ -1,0 +1,15 @@
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\bin\Debug\net6.0\csharp-gestore-eventi.exe
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\bin\Debug\net6.0\csharp-gestore-eventi.deps.json
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\bin\Debug\net6.0\csharp-gestore-eventi.runtimeconfig.json
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\bin\Debug\net6.0\csharp-gestore-eventi.dll
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\bin\Debug\net6.0\csharp-gestore-eventi.pdb
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.csproj.AssemblyReference.cache
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.AssemblyInfoInputs.cache
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.AssemblyInfo.cs
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.csproj.CoreCompileInputs.cache
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.dll
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\refint\csharp-gestore-eventi.dll
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.pdb
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\csharp-gestore-eventi.genruntimeconfig.cache
+C:\Users\Caringi's\RiderProjects\csharp-gestore-eventi\obj\Debug\net6.0\ref\csharp-gestore-eventi.dll
