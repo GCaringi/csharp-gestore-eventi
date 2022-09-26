@@ -1,8 +1,8 @@
 ﻿using csharp_gestore_eventi;
 
 ProgramEvent eventManager = CreateProgram();
-AddEvent(eventManager);
-
+// AddEvent(eventManager);
+SetAllProgram(eventManager);
 
 Console.WriteLine($"Numero di eventi: {eventManager.HowManyEvents()}");
 
@@ -33,9 +33,58 @@ Event CreateEvent()
     }
     catch (ArgumentException error)
     {
-        // Console.WriteLine(error.Message);
         throw;
     }
+}
+
+Conference CreateConference()
+{
+    Conference? conference = null;
+    try
+    {
+        Console.Write("Inserisci il nome della conferenza: ");
+        string title = Console.ReadLine() ?? "";
+        Console.Write("Inserisci la data della conferenza(gg/mm/aaaa): ");
+        DateOnly date = FromString(Console.ReadLine() ?? "01/01/2000");
+        Console.Write("Inserisci la capienza della conferenza: ");
+        int capacity = Convert.ToInt32(Console.ReadLine() ?? "0");
+        Console.Write("Inserisci il nome del relatore: ");
+        string speaker = Console.ReadLine() ?? "";
+        Console.Write("Insrisci il prezzo del biglietto: ");
+        int price = Convert.ToInt32(Console.ReadLine() ?? "0");
+        conference = new Conference(title, date, capacity, speaker, price);
+        return conference;
+    }
+    catch (ArgumentException error)
+    {
+        throw;
+    }
+}
+
+ProgramEvent CreateProgram()
+{
+    ProgramEvent? program = null;
+    bool flag = true;
+    do
+    {
+        try
+        {
+            Console.Write("Inserisci il nome del programma: ");
+            string name = Console.ReadLine() ?? "";
+            program = new ProgramEvent(name);
+            flag = false;
+            Console.WriteLine();
+            return program;
+        }
+        catch (ArgumentException error)
+        {
+            Console.WriteLine(error.Message);
+            flag = true;
+        } 
+    } while (flag);
+    
+
+    return program;
 }
 
 DateOnly FromString(string date)
@@ -44,11 +93,19 @@ DateOnly FromString(string date)
     {
         throw new ArgumentException("Not valid date");
     }
+    
     string[] dateArray = date.Split('/');
     int day = Convert.ToInt32(dateArray[0]);
     int month = Convert.ToInt32(dateArray[1]);
     int year = Convert.ToInt32(dateArray[2]);
     return new DateOnly(year, month, day);
+}
+
+List<Event> SearchByDate(ProgramEvent program)
+{
+    Console.Write("Inserisci la data in cui cercare gli eventi(gg/mm/aaaa): ");
+    DateOnly date = FromString(Console.ReadLine() ?? "01/01/2000");
+    return program.GetEventsFromDate(date);
 }
 
 void ReserveSeats(Event e)
@@ -113,40 +170,28 @@ void ReserveAndCancel(Event e)
     printInfo(e);
 }
 
-ProgramEvent CreateProgram()
+void AddEvent(ProgramEvent program)
 {
-    ProgramEvent? program = null;
+    int n = 0;
     bool flag = true;
     do
     {
         try
         {
-            Console.Write("Inserisci il nome del programma: ");
-            string name = Console.ReadLine() ?? "";
-            program = new ProgramEvent(name);
+            Console.Write("Quanti eventi vuoi aggiungere? ");
+            n = Convert.ToInt32(Console.ReadLine() ?? "0");
             flag = false;
-            Console.WriteLine();
-            return program;
         }
-        catch (ArgumentException error)
+        catch (Exception e)
         {
-            Console.WriteLine(error.Message);
+            Console.WriteLine(e.Message + "\n");
             flag = true;
-        } 
+        }
     } while (flag);
-    
-
-    return program;
-}
-
-void AddEvent(ProgramEvent program)
-{
-    Console.Write("Quanti eventi vuoi aggiungere? ");
-    int n = Convert.ToInt32(Console.ReadLine() ?? "0");
 
     while (n != program.HowManyEvents())
     {
-        bool flag = true;
+        flag = true;
         
         do
         {
@@ -167,10 +212,86 @@ void AddEvent(ProgramEvent program)
     }
 }
 
-List<Event> SearchByDate(ProgramEvent program)
+void SetAllProgram(ProgramEvent program)
 {
-    Console.Write("Inserisci la data in cui cercare gli eventi(gg/mm/aaaa): ");
-    DateOnly date = FromString(Console.ReadLine() ?? "01/01/2000");
-    return program.GetEventsFromDate(date);
+    int numEvent = 0;
+    int numConference = 0;
+    bool flag = true;
+
+    do
+    {
+        try
+        {
+            Console.Write("Quanti eventi vuoi aggiungere? ");
+            numEvent = Convert.ToInt32(Console.ReadLine() ?? "0");
+            flag = false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + "\n");
+            flag = true;
+        }
+    } while (flag);
+
+    Console.WriteLine("BONUS\n");
+    do
+    {
+        try
+        {
+            Console.Write("\nQuante conferenze ci sono nel tuo programma? ");
+            numConference = Convert.ToInt32(Console.ReadLine() ?? "0");
+            flag = false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message + "\n");
+            flag = true;
+        }
+    } while (flag);
+    
+    while (numEvent != program.HowManyEvents())
+    {
+        flag = true;
+        
+        do
+        {
+            try
+            {
+                Event tmpEvent = CreateEvent();
+                program.AddEvent(tmpEvent);
+                Console.WriteLine();
+                flag = false;
+            }
+            catch (ArgumentException error)
+            {
+                Console.WriteLine(error.Message);
+                flag = true;
+
+            }
+        } while (flag);
+    }
+
+    while (numConference != program.HowManyEvents()- numEvent)
+    {
+        flag = true;
+
+        do
+        {
+            try
+            {
+                Conference tmpConference = CreateConference();
+                program.AddEvent(tmpConference);
+                Console.WriteLine();
+                flag = false;
+            }
+            catch (ArgumentException error)
+            {
+                Console.WriteLine(error.Message);
+                flag = true;
+            }
+        } while (flag);
+    }
+    
 }
+
 
