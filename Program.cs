@@ -2,17 +2,23 @@
 
 Event defaultEvent = new Event("Convegno", new DateOnly(2023, 05, 12), 500);
 
-// Event e = createEvent();
+// Event e = CreateEvent();
 Console.WriteLine(defaultEvent.ToString());
 
 // ReserveSeats(defaultEvent);
 // printInfo(defaultEvent);
 
-reserveAndCancel(defaultEvent);
+// ReserveAndCancel(defaultEvent);
+
+ProgramEvent EventManager = new ProgramEvent("Concerti");
+
+EventManager.AddEvent(defaultEvent);
+
+EventManager.PrintSummary();
 
 
 
-Event createEvent()
+Event CreateEvent()
 {
     Event e = null;
     try
@@ -20,7 +26,7 @@ Event createEvent()
         Console.Write("Inserisci il nome dell'evento: ");
         string title = Console.ReadLine() ?? "";
         Console.Write("Inserisci la data dell'evento(gg/mm/aaaa): ");
-        DateOnly date = fromString(Console.ReadLine());
+        DateOnly date = FromString(Console.ReadLine());
         Console.Write("Inserisci la capienza dell'evento: ");
         int capacity = Convert.ToInt32(Console.ReadLine() ?? "0");
         e = new Event(title, date, capacity);
@@ -33,7 +39,7 @@ Event createEvent()
     return e;
 }
 
-DateOnly fromString(string date)
+DateOnly FromString(string date)
 {
     string[] dateArray = date.Split('/');
     int day = Convert.ToInt32(dateArray[0]);
@@ -76,7 +82,7 @@ void printInfo(Event e)
     Console.WriteLine($"Posti disponibili = {e.Capacity}");
 }
 
-void reserveAndCancel(Event e)
+void ReserveAndCancel(Event e)
 {
     printInfo(e);
     ReserveSeats(e);
